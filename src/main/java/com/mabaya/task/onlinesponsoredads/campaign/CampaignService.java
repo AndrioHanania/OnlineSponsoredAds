@@ -3,11 +3,13 @@ package com.mabaya.task.onlinesponsoredads.campaign;
 import com.mabaya.task.onlinesponsoredads.exceptions.OnlineSponsoredAdsException;
 import com.mabaya.task.onlinesponsoredads.exceptions.general.DupCampaignException;
 import com.mabaya.task.onlinesponsoredads.exceptions.notExist.MyNotExistException;
+import com.mabaya.task.onlinesponsoredads.product.Product;
 import com.mabaya.task.onlinesponsoredads.product.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -30,6 +32,7 @@ public class CampaignService {
     }
 
     public void deleteById(Long campaignId) {
+        campaignRepository.removeCampaignFrom_campaign_products(campaignId);
         campaignRepository.deleteById(campaignId);
     }
 
@@ -55,9 +58,14 @@ public class CampaignService {
     @Scheduled(cron = "0 0 0 * * ?") // Run daily at midnight
     public void updateIsActiveForCampaigns() {
         List<Campaign> campaigns = campaignRepository.findAll();
-        LocalDateTime tenDaysAgo = LocalDateTime.now().minus(10, ChronoUnit.DAYS);
+        LocalDate tenDaysAgo = LocalDate.now().minus(10, ChronoUnit.DAYS);
 
         campaigns.forEach(campaign -> campaign.checkActive(tenDaysAgo));
         campaignRepository.saveAll(campaigns);
+    }
+
+    public void dropCampaigns() {
+        campaignRepository.dropCampaigns();
+        campaignRepository.drop_campaign_sequence();
     }
 }

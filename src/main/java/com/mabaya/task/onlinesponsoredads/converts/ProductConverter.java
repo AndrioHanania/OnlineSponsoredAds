@@ -11,7 +11,7 @@ public class ProductConverter implements Function<Product, ProductDTO> {
                 product.getId(),
                 product.getSerialNumber(),
                 product.getTitle(),
-                product.getCategory(),
+                product.getCategory().getName(),
                 product.getPrice());
     }
 }

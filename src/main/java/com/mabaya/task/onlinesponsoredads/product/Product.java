@@ -1,5 +1,6 @@
 package com.mabaya.task.onlinesponsoredads.product;
 
+import com.mabaya.task.onlinesponsoredads.category.Category;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,11 +40,9 @@ public class Product {
             columnDefinition = "TEXT")
     private String title;
 
-    @Column(
-            name = "category",
-            nullable = false,
-            columnDefinition = "TEXT")
-    private String category;
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "category_id")
+    private Category category;
 
     @Column(
             name = "price",
@@ -54,7 +53,7 @@ public class Product {
     public Product(
             int serialNumber,
             String title,
-            String category,
+            Category category,
             double price) {
         this.serialNumber = serialNumber;
         this.title = title;

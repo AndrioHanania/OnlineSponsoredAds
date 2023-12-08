@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
@@ -48,7 +50,7 @@ public class Campaign {
             name = "start_date",
             nullable = false,
             columnDefinition = "TIMESTAMP")
-    private LocalDateTime startDate;// not createdAt!!!
+    private LocalDate startDate;// not createdAt!!!
 
     @Column(
             name = "active",
@@ -67,16 +69,16 @@ public class Campaign {
     public Campaign(
             String name,
             double bid,
-            LocalDateTime startDate,
+            LocalDate startDate,
             Set<Product> products) {
         this.name = name;
         this.bid = bid;
         this.startDate = startDate;
         this.products = products;
-        checkActive(LocalDateTime.now().minus(10, ChronoUnit.DAYS));
+        checkActive(LocalDate.now().minus(10, ChronoUnit.DAYS));
     }
 
-    public void checkActive(LocalDateTime tenDaysAgo){
+    public void checkActive(LocalDate tenDaysAgo){
         active = !startDate.isBefore(tenDaysAgo);
     }
 }

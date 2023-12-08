@@ -5,7 +5,7 @@ import com.mabaya.task.onlinesponsoredads.product.Product;
 
 public class DupProductException extends OnlineSponsoredAdsException {
     public DupProductException(Product product) {
-        super(String.format("There is already a campaign with serial number= %d",
+        super(String.format("There is already a product with serial number= %d",
                 product.getSerialNumber()));
     }
 }

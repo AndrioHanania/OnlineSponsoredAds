@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    image: online-sponsored-ads-image:latest
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/onlinesponsoredadsdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: onlinesponsoredadsdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres

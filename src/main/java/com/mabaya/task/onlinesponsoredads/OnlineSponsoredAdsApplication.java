@@ -1,5 +1,6 @@
 package com.mabaya.task.onlinesponsoredads;
 
+import com.mabaya.task.onlinesponsoredads.category.CategoryService;
 import com.mabaya.task.onlinesponsoredads.converts.CampaignConverter;
 import com.mabaya.task.onlinesponsoredads.converts.NewCampaignDTOConverter;
 import com.mabaya.task.onlinesponsoredads.converts.NewProductDTOConverter;
@@ -20,6 +21,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories("com")//scanning JPA @Repository classes.
 public class OnlineSponsoredAdsApplication {
     private final ProductService productService;
+    private final CategoryService categoryService;
+
 
     public static void main(String[] args) {
         SpringApplication.run(OnlineSponsoredAdsApplication.class, args);
@@ -29,6 +32,6 @@ public class OnlineSponsoredAdsApplication {
     @Bean public CampaignConverter createCampaignConverter(){
         return new CampaignConverter();
     }
-    @Bean public NewProductDTOConverter createNewProductDTOConverter(){return new NewProductDTOConverter();}
+    @Bean public NewProductDTOConverter createNewProductDTOConverter(){return new NewProductDTOConverter(categoryService);}
     @Bean public ProductConverter createProductConverter(){return new ProductConverter();}
 }

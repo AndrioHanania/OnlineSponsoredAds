@@ -15,9 +15,9 @@ public class NewCampaignDTOConverter implements Function<NewCampaignDTO, Campaig
     @Override
     public Campaign apply(NewCampaignDTO newCampaignDTO) {
         return new Campaign(
-                newCampaignDTO.name(),
-                newCampaignDTO.bid(),
-                CustomLocalDateDeserializer.convert(newCampaignDTO.date()),
-                productService.convertProductIds(newCampaignDTO.productIds()));
+                newCampaignDTO.getName(),
+                newCampaignDTO.getBid(),
+                newCampaignDTO.getDate(),
+                productService.convertProductIds(newCampaignDTO.getProductIds()));
     }
 }
