@@ -1,6 +1,7 @@
 package com.mabaya.task.onlinesponsoredads.campaign;
 
 import com.mabaya.task.onlinesponsoredads.DTO.incoming.NewCampaignDTO;
+import com.mabaya.task.onlinesponsoredads.DTO.incoming.UpdateProductsDTO;
 import com.mabaya.task.onlinesponsoredads.DTO.outgoing.CampaignDTO;
 import com.mabaya.task.onlinesponsoredads.converts.CampaignConverter;
 import com.mabaya.task.onlinesponsoredads.converts.NewCampaignDTOConverter;
@@ -63,18 +64,17 @@ public class CampaignController {
         }
     }
 
-    @PutMapping(path = "updateProduct")
-    public void updateProduct(
-            @RequestParam("campaignId") Long campaignId,
-            @RequestParam("productIds") List<Long> productIds) {
+    @PutMapping(path = "updateProducts")
+    public void updateProducts(
+            @RequestBody UpdateProductsDTO updateProductsDTO) {
         try{
-            log.info("[CampaignController][api/campaigns/updateProduct] received new request to update products to campaign");
-            campaignService.updateProduct(campaignId, productIds);
-            log.info("[CampaignController][api/campaigns/updateProduct] update products to campaign completed successfully");
+            log.info("[CampaignController][api/campaigns/updateProducts] received new request to update products to campaign");
+            campaignService.updateProduct(updateProductsDTO.campaignId(), updateProductsDTO.productIds());
+            log.info("[CampaignController][api/campaigns/updateProducts] update products to campaign completed successfully");
         }
         catch (Exception e){
-            log.error(String.format("[CampaignController][api/campaigns/updateProduct] update products to campaign failed: %s", e));
-            throw new ResponseException(e, "updateProduct");
+            log.error(String.format("[CampaignController][api/campaigns/updateProducts] update products to campaign failed: %s", e));
+            throw new ResponseException(e, "updateProducts");
         }
     }
 
